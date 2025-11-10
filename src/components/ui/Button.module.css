@@ -1,0 +1,117 @@
+/* Button Component Styles */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  transition: all var(--transition-base);
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--coral-400);
+  outline-offset: 2px;
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.button:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+/* Variants */
+.primary {
+  background-color: var(--coral-400);
+  color: white;
+}
+
+.primary:hover:not(:disabled) {
+  background-color: var(--coral-500);
+}
+
+.secondary {
+  background-color: var(--dark-card);
+  color: var(--text-primary);
+}
+
+.secondary:hover:not(:disabled) {
+  background-color: var(--dark-hover);
+}
+
+.outline {
+  border: 2px solid var(--coral-400);
+  color: var(--coral-400);
+  background: transparent;
+}
+
+.outline:hover:not(:disabled) {
+  background-color: var(--coral-400);
+  color: white;
+}
+
+.ghost {
+  color: var(--text-secondary);
+  background: transparent;
+}
+
+.ghost:hover:not(:disabled) {
+  background-color: var(--dark-hover);
+  color: var(--text-primary);
+}
+
+.danger {
+  background-color: var(--error);
+  color: white;
+}
+
+.danger:hover:not(:disabled) {
+  background-color: #D32F2F;
+}
+
+/* Sizes */
+.sm {
+  padding: 6px 12px;
+  font-size: 14px;
+}
+
+.md {
+  padding: 10px 16px;
+  font-size: 16px;
+}
+
+.lg {
+  padding: 12px 24px;
+  font-size: 18px;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.loading {
+  opacity: 0.7;
+  cursor: wait;
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+  width: 20px;
+  height: 20px;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

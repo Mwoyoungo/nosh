@@ -1,0 +1,56 @@
+/* Fix for CometChat message list black screen */
+
+/* Ensure message list has proper background and scrolling */
+.cometchat__messagelist {
+  background-color: var(--dark-bg) !important;
+  overflow-y: auto !important;
+  height: 100% !important;
+}
+
+/* Ensure message bubbles are visible */
+.cometchat__message-bubble {
+  background-color: var(--dark-card) !important;
+}
+
+/* Sent messages (right side) */
+.cometchat__message-bubble--sent {
+  background-color: var(--coral-400) !important;
+}
+
+/* Received messages (left side) */
+.cometchat__message-bubble--received {
+  background-color: var(--dark-card) !important;
+}
+
+/* Message text color */
+.cometchat__message-bubble__text {
+  color: var(--text-primary) !important;
+}
+
+/* Message list wrapper */
+.cometchat__messagelist__wrapper {
+  background-color: var(--dark-bg) !important;
+  overflow-y: auto !important;
+  height: 100% !important;
+}
+
+/* Message container */
+.cometchat__message {
+  background-color: transparent !important;
+}
+
+/* Ensure text bubbles are visible */
+.cometchat__textbubble {
+  background-color: var(--dark-card) !important;
+  color: var(--text-primary) !important;
+}
+
+.cometchat__textbubble--sent {
+  background-color: var(--coral-400) !important;
+  color: #ffffff !important;
+}
+
+.cometchat__textbubble--received {
+  background-color: var(--dark-card) !important;
+  color: var(--text-primary) !important;
+}
