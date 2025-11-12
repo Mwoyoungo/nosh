@@ -206,7 +206,7 @@ const VideoCard = ({
         src={video.url}
         poster={video.thumbnailUrl}
         autoPlay={true}
-        muted={true}
+        muted={false}
         loop={true}
       />
 
