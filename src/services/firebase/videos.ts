@@ -26,10 +26,12 @@ export const getVideosNearby = async (
     console.log(`Center geohash (precision 4): ${centerGeohash}`);
 
     // Query videos by category AND geohash prefix (efficient!)
+    // Only show approved videos (moderation)
     const videosRef = collection(db, COLLECTIONS.VIDEOS);
     const q = query(
       videosRef,
       where('category', '==', category),
+      where('approved', '==', true),
       where('geohash', '>=', centerGeohash),
       where('geohash', '<', centerGeohash + '~'),
       firestoreLimit(limit * 5) // Get more since we're filtering by area first
@@ -94,6 +96,7 @@ export const getPopularVideos = async (
     const q = query(
       videosRef,
       where('category', '==', category),
+      where('approved', '==', true),
       // orderBy('views', 'desc'), // UNCOMMENT after creating Firebase index
       firestoreLimit(limit)
     );

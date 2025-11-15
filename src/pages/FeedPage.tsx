@@ -27,7 +27,7 @@ const FeedPage = () => {
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
   const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
   const [locationDenied, setLocationDenied] = useState(false);
-  const [radiusMeters, setRadiusMeters] = useState(5000); // Default 5km
+  const [radiusMeters, setRadiusMeters] = useState(100000); // Default 100km
   const [showRadiusSelector, setShowRadiusSelector] = useState(false);
   const [hideNav, setHideNav] = useState(false);
   const [galleryImages, setGalleryImages] = useState<string[] | null>(null);
@@ -35,13 +35,15 @@ const FeedPage = () => {
 
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const categories: VideoCategory[] = ['RENT', 'BUY', 'FOOD', 'SERVICES'];
+  const categories: VideoCategory[] = ['RENT', 'BUY', 'SERVICES'];
   const radiusOptions = [
     { label: '1km', value: 1000 },
     { label: '5km', value: 5000 },
     { label: '10km', value: 10000 },
     { label: '25km', value: 25000 },
     { label: '50km', value: 50000 },
+    { label: '100km', value: 100000 },
+    { label: '500km', value: 500000 },
   ];
 
   // Request location permission

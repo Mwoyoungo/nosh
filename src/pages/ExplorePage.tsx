@@ -21,7 +21,7 @@ const ExplorePage = () => {
   const [loading, setLoading] = useState(true);
   const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
   const [locationDenied, setLocationDenied] = useState(false);
-  const [radiusMeters, setRadiusMeters] = useState(5000);
+  const [radiusMeters, setRadiusMeters] = useState(100000);
   const [showRadiusSelector, setShowRadiusSelector] = useState(false);
   const [selectedVideo, setSelectedVideo] = useState<VideoWithDistance | null>(null);
   const [mapCenter, setMapCenter] = useState<{ lat: number; lng: number } | null>(null);
@@ -33,13 +33,15 @@ const ExplorePage = () => {
   const markersRef = useRef<google.maps.Marker[]>([]);
   const circleRef = useRef<google.maps.Circle | null>(null);
 
-  const categories: VideoCategory[] = ['RENT', 'BUY', 'FOOD', 'SERVICES'];
+  const categories: VideoCategory[] = ['RENT', 'BUY', 'SERVICES'];
   const radiusOptions = [
     { label: '1km', value: 1000 },
     { label: '5km', value: 5000 },
     { label: '10km', value: 10000 },
     { label: '25km', value: 25000 },
     { label: '50km', value: 50000 },
+    { label: '100km', value: 100000 },
+    { label: '500km', value: 500000 },
   ];
 
   // Request location permission
@@ -78,7 +80,7 @@ const ExplorePage = () => {
     const initMap = () => {
       const mapOptions: google.maps.MapOptions = {
         center: { lat: userLocation.lat, lng: userLocation.lng },
-        zoom: radiusMeters <= 5000 ? 13 : radiusMeters <= 10000 ? 12 : 11,
+        zoom: radiusMeters <= 5000 ? 13 : radiusMeters <= 10000 ? 12 : radiusMeters <= 50000 ? 11 : radiusMeters <= 100000 ? 10 : 8,
         mapTypeControl: false,
         streetViewControl: false,
         fullscreenControl: false,
