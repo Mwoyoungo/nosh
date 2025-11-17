@@ -8,6 +8,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { collection, query, where, getDocs, doc, getDoc } from 'firebase/firestore';
 import { db, COLLECTIONS } from '@/services/firebase/config';
+import { logout } from '@/services/firebase/auth';
 import type { User } from '@/types/user';
 import type { Video } from '@/types/video';
 import BottomNav from '@/components/navigation/BottomNav';
@@ -285,6 +286,18 @@ const ProfilePage = () => {
     return count.toString();
   };
 
+  const handleLogout = async () => {
+    if (!confirm('Are you sure you want to logout?')) return;
+
+    try {
+      await logout();
+      navigate('/auth');
+    } catch (error) {
+      console.error('Logout error:', error);
+      alert('Failed to logout');
+    }
+  };
+
   const totalLikes = videos.reduce((sum, video) => sum + (video.likes || 0), 0);
   const totalViews = videos.reduce((sum, video) => sum + (video.views || 0), 0);
 
@@ -353,36 +366,65 @@ const ProfilePage = () => {
           </div>
         )}
 
-        {/* Edit Profile Button - Only show for own profile */}
+        {/* Edit Profile & Logout Buttons - Only show for own profile */}
         {profileUserId === currentUser?.id && (
-          <button
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '8px',
-              padding: '12px 32px',
-              backgroundColor: 'transparent',
-              color: 'var(--text-primary)',
-              border: '1px solid var(--dark-border)',
-              borderRadius: 'var(--radius-full)',
-              fontSize: '16px',
-              fontWeight: '600',
-              cursor: 'pointer',
-              transition: 'var(--transition-normal)',
-              marginTop: '8px',
-            }}
-            onClick={() => setShowEditModal(true)}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = 'transparent';
-            }}
-          >
-            <Icons.User size={20} />
-            <span>Edit Profile</span>
-          </button>
+          <div style={{ display: 'flex', gap: '12px', marginTop: '8px' }}>
+            <button
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px',
+                padding: '12px 24px',
+                backgroundColor: 'transparent',
+                color: 'var(--text-primary)',
+                border: '1px solid var(--dark-border)',
+                borderRadius: 'var(--radius-full)',
+                fontSize: '16px',
+                fontWeight: '600',
+                cursor: 'pointer',
+                transition: 'var(--transition-normal)',
+              }}
+              onClick={() => setShowEditModal(true)}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = 'transparent';
+              }}
+            >
+              <Icons.User size={20} />
+              <span>Edit Profile</span>
+            </button>
+
+            <button
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px',
+                padding: '12px 24px',
+                backgroundColor: 'transparent',
+                color: '#ef4444',
+                border: '1px solid #ef4444',
+                borderRadius: 'var(--radius-full)',
+                fontSize: '16px',
+                fontWeight: '600',
+                cursor: 'pointer',
+                transition: 'var(--transition-normal)',
+              }}
+              onClick={handleLogout}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = 'rgba(239, 68, 68, 0.1)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = 'transparent';
+              }}
+            >
+              <Icons.ArrowRight size={20} style={{ transform: 'rotate(180deg)' }} />
+              <span>Logout</span>
+            </button>
+          </div>
         )}
 
         {/* Message Button - Only show if viewing someone else's profile */}
