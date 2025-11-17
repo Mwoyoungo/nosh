@@ -12,6 +12,7 @@ import ProfilePage from '@/pages/ProfilePage';
 import MessagesPage from '@/pages/MessagesPage';
 import ChatPage from '@/pages/ChatPage';
 import UploadPage from '@/pages/UploadPage';
+import AdminPage from '@/pages/AdminPage';
 
 // Loading Component
 const LoadingScreen = () => (
@@ -117,6 +118,15 @@ const AppRoutes = () => {
         element={
           <ProtectedRoute>
             <UploadPage />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/admin"
+        element={
+          <ProtectedRoute>
+            <AdminPage />
           </ProtectedRoute>
         }
       />

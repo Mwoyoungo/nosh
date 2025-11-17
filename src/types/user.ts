@@ -11,5 +11,6 @@ export interface User {
   avatarUrl: string;
   bio: string;
   userRole: 'NORMAL_USER' | 'VENDOR';
+  isAdmin: boolean;
   createdAt: number;
 }

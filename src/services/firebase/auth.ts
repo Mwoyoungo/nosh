@@ -40,6 +40,7 @@ export const signUp = async (
       avatarUrl: '',
       bio: '',
       userRole,
+      isAdmin: false,
       createdAt: Date.now(),
     };
 
