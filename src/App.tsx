@@ -11,6 +11,7 @@ import ExplorePage from '@/pages/ExplorePage';
 import ProfilePage from '@/pages/ProfilePage';
 import MessagesPage from '@/pages/MessagesPage';
 import ChatPage from '@/pages/ChatPage';
+import UploadPage from '@/pages/UploadPage';
 
 // Loading Component
 const LoadingScreen = () => (
@@ -107,6 +108,15 @@ const AppRoutes = () => {
         element={
           <ProtectedRoute>
             <ChatPage />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/upload"
+        element={
+          <ProtectedRoute>
+            <UploadPage />
           </ProtectedRoute>
         }
       />

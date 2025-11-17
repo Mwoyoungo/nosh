@@ -19,6 +19,7 @@ const BottomNav = ({ hide = false }: BottomNavProps) => {
   const navItems = [
     { path: '/', icon: Icons.Home, label: 'Feed' },
     { path: '/explore', icon: Icons.Location, label: 'Explore' },
+    { path: '/upload', icon: Icons.Camera, label: 'Upload', isHighlight: true },
     { path: '/messages', icon: Icons.Messages, label: 'Messages' },
     { path: '/profile', icon: Icons.Profile, label: 'Profile' },
   ];
@@ -60,19 +61,24 @@ const BottomNav = ({ hide = false }: BottomNavProps) => {
       {navItems.map((item) => {
         const isActive = location.pathname === item.path;
         const Icon = item.icon;
+        const isHighlight = item.isHighlight || false;
 
         return (
           <button
             key={item.path}
             style={{
               ...navItemStyle(isActive),
-              background: 'none',
+              background: isHighlight ? 'var(--coral-400)' : 'none',
               border: 'none',
+              borderRadius: isHighlight ? '50%' : '0',
+              width: isHighlight ? '44px' : 'auto',
+              height: isHighlight ? '44px' : 'auto',
+              padding: isHighlight ? '10px' : '4px 12px',
             }}
             onClick={() => navigate(item.path)}
           >
-            <Icon size={20} color={isActive ? 'var(--coral-400)' : 'var(--text-secondary)'} />
-            <span style={labelStyle}>{item.label}</span>
+            <Icon size={20} color={isHighlight ? 'white' : (isActive ? 'var(--coral-400)' : 'var(--text-secondary)')} />
+            {!isHighlight && <span style={labelStyle}>{item.label}</span>}
           </button>
         );
       })}

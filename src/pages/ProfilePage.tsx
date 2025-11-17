@@ -11,6 +11,7 @@ import { db, COLLECTIONS } from '@/services/firebase/config';
 import type { User } from '@/types/user';
 import type { Video } from '@/types/video';
 import BottomNav from '@/components/navigation/BottomNav';
+import EditProfileModal from '@/components/profile/EditProfileModal';
 import { Icons } from '@/theme';
 import { formatDistance } from '@/utils/geohash';
 
@@ -26,22 +27,23 @@ const ProfilePage = () => {
   const [videos, setVideos] = useState<Video[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
+  const [showEditModal, setShowEditModal] = useState(false);
 
   // Fetch user profile
-  useEffect(() => {
-    const fetchProfile = async () => {
-      if (!profileUserId) return;
+  const fetchProfile = async () => {
+    if (!profileUserId) return;
 
-      try {
-        const userDoc = await getDoc(doc(db, COLLECTIONS.USERS, profileUserId));
-        if (userDoc.exists()) {
-          setProfileUser(userDoc.data() as User);
-        }
-      } catch (error) {
-        console.error('Error fetching profile:', error);
+    try {
+      const userDoc = await getDoc(doc(db, COLLECTIONS.USERS, profileUserId));
+      if (userDoc.exists()) {
+        setProfileUser(userDoc.data() as User);
       }
-    };
+    } catch (error) {
+      console.error('Error fetching profile:', error);
+    }
+  };
 
+  useEffect(() => {
     fetchProfile();
   }, [profileUserId]);
 
@@ -351,6 +353,38 @@ const ProfilePage = () => {
           </div>
         )}
 
+        {/* Edit Profile Button - Only show for own profile */}
+        {profileUserId === currentUser?.id && (
+          <button
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '8px',
+              padding: '12px 32px',
+              backgroundColor: 'transparent',
+              color: 'var(--text-primary)',
+              border: '1px solid var(--dark-border)',
+              borderRadius: 'var(--radius-full)',
+              fontSize: '16px',
+              fontWeight: '600',
+              cursor: 'pointer',
+              transition: 'var(--transition-normal)',
+              marginTop: '8px',
+            }}
+            onClick={() => setShowEditModal(true)}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = 'transparent';
+            }}
+          >
+            <Icons.User size={20} />
+            <span>Edit Profile</span>
+          </button>
+        )}
+
         {/* Message Button - Only show if viewing someone else's profile */}
         {profileUserId !== currentUser?.id && (
           <button
@@ -527,6 +561,22 @@ const ProfilePage = () => {
             </div>
           </div>
         </div>
+      )}
+
+      {/* Edit Profile Modal */}
+      {showEditModal && profileUser && currentUser && (
+        <EditProfileModal
+          userId={currentUser.id}
+          currentName={profileUser.name}
+          currentUsername={profileUser.username}
+          currentBio={profileUser.bio || ''}
+          currentAvatarUrl={profileUser.avatarUrl || ''}
+          onClose={() => setShowEditModal(false)}
+          onSuccess={() => {
+            setShowEditModal(false);
+            fetchProfile(); // Refresh profile data
+          }}
+        />
       )}
 
       {/* Bottom Navigation */}
