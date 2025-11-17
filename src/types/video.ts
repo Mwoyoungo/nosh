@@ -38,6 +38,7 @@ export interface Video {
 
   // Other
   isAvailable: boolean;
+  approved: boolean;
   rating?: number;
 }
 
